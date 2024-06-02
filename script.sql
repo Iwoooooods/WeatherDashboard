@@ -1,3 +1,5 @@
+create database weather_db if not exists;
+use weather_db;
 create table user
 (
     id         int auto_increment
