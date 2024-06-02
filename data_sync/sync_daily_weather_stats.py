@@ -16,6 +16,7 @@ date_range = {'start_date': date.today(), 'end_date': date.today()}
 async def fetch_daily_weather_stats(cities: List[str]):
     tasks = [visualcrossing_service.get_weather_by_location(city, date_range) for city in cities]
     return await asyncio.gather(*tasks)
+
 def set_stats_dict(total_stats: List[dict]):
     stats_dict = {}
     for city_stats in total_stats:

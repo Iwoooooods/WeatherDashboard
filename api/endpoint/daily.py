@@ -1,11 +1,16 @@
 from fastapi import APIRouter
 from service.visualcrossing_service import visualcrossing_service
 
+from service.dashboard_service import dashboard_service
+
 from schema.daily_schema import DailyBase
-from utils.decorator import timer
 
 router = APIRouter()
 @router.post("/daily_dashboard") # 展示当日多个城市的统计数据看板
 async def daily_dashboard(api_in: DailyBase):
-    date_range = api_in.date_range
-    return {city: await visualcrossing_service.get_weather_by_location(city, date_range) for city in api_in.cities}
+    return dashboard_service.get_daily_dashboard(api_in)
+
+@router.get("/hourly_detail/{city_name}")
+async def hourly_detail(city_name: str):
+    api_in = DailyBase(cities=[city_name])
+    return dashboard_service.get_hourly_dashboard(api_in)
